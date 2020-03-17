@@ -19,6 +19,6 @@ export default {
 .application
     width: 800px 
     background-color: #f1f1f1
-    padding: 20px 40px
+    padding: 20px
     box-sizing: border-box 
 </style>

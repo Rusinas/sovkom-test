@@ -3,6 +3,14 @@
         router-view
 </template>
 
+<script>
+export default {
+    mounted() {
+        this.$store.dispatch('getStarred')
+    }
+}
+</script>
+
 <style lang="sass">
 html, body 
     margin: 0px !important
