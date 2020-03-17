@@ -21,4 +21,9 @@ export default {
     background-color: white 
     padding: 0 20px 
     box-sizing: border-box
+
+.logo, .starred
+    cursor: pointer
+    &:hover 
+        color: blue
 </style>

@@ -41,9 +41,10 @@ export default {
         async search() {
             if (!this.searchString) return 
 
-            this.loading = true
 
             try {
+                this.loading = true
+
                 let url = `/words/?letterPattern=^${this.searchString}&limit=10`
                 if (this.partOfSpeech) url += `&partOfSpeech=${this.partOfSpeech}`
 
@@ -51,19 +52,43 @@ export default {
 
                 // Костыль, чтобы получить определения найденных слов. 
                 // Отрабатывает ужасно долго :/ 
-                // Увы, поиск выдает только массив строк и не более.
-                // Результаты отсортированы по алфавиту по умолчанию
-                const wordsWithDetails = await Promise.all([
+                // Увы, обычный поиск выдает только массив строк и не более.
+                // Результаты отсортированы по алфавиту по умолчанию, поэтому от меня не требуется доп. действий
+                let wordsWithDetails = await Promise.all([
                     ...result.map(word => {
                         return http.get(`/words/${word}`).then(result => result.data)
                     })
                 ])
 
+                wordsWithDetails = wordsWithDetails.map(item => {
+                    // Немного костыльно приходится приводить к удобному формату данных
+                    // Это нужно для нормального отображения дополнительных определений
+                    const definitions = {}
+                    const topDefinition = item.results && item.results.length ? item.results[0].definition : null
+                    const partOfSpeech = item.results && item.results.length ? item.results[0].partOfSpeech : null
+
+                    if (item.results) {
+
+                        for (let def of item.results) {
+
+                            if (!definitions[def.partOfSpeech]) {
+                                definitions[def.partOfSpeech] = []
+                            }
+
+                            definitions[def.partOfSpeech].push(def.definition)
+                        }
+                    }
+
+                    return {
+                        word: item.word,
+                        definition: topDefinition,
+                        partOfSpeech,
+                        definitions
+                    }
+                })
+
                 this.results = wordsWithDetails
 
-                console.log('Results, ', wordsWithDetails)
-
-                console.log('Result!', result)
             } catch (error) {
                 console.error('Ошибка:', error)
             } finally {
@@ -72,10 +97,7 @@ export default {
         },
         setPartOfSpeech(value) {
             value = value ? value.toLowerCase() : null
-            
             this.partOfSpeech = value
-
-            console.log('VALUE', value)
         }
     }
 }

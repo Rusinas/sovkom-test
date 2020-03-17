@@ -4,15 +4,20 @@
         .handle(v-if="draggable") H
         .word-info
             .word {{ word.word }}
+            .part {{ word.partOfSpeech }}
 
-            template(v-if="word.results && word.results.length")
-                .part {{ word.results[0].partOfSpeech }}
-                .description {{ word.results[0].definition }}
+            .transcription(v-if="showDetails")
+            .description(v-else) {{ word.definition }}
 
         .star(@click.stop="save") {{ isStarred }}
 
-    .details(v-if="showDetails")
-        span Детальные детали
+    .details(v-if="showDetails && Object.keys(word.definitions).length")
+        span Other definitions
+        .definitions
+            .definition-group(v-for="(definitions, key, index) in word.definitions") {{ Object.keys(word.definitions)[index] }}
+                .definition(v-for="def in definitions") {{ def }}
+
+    .details(v-else-if="showDetails") No definition found
 </template>
 
 <script>
