@@ -63,9 +63,11 @@ export default {
 
 <style lang="sass" scoped>
 .no-starred 
+    font-size: 14px
+    color: #BDBDBD
     display: flex
     width: 100% 
-    min-height: 150px 
+    min-height: 100px 
     align-items: center 
     justify-content: center  
 </style>

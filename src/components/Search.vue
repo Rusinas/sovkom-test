@@ -1,8 +1,8 @@
 <template lang="pug">
 .search
     .search-input 
-        input(placeholder="Search" :value="value" @input="$emit('input', $event.target.value)")
-        button(@click="$emit('search')") S
+        input(placeholder="Search" @keyup.enter="emitSearch" :value="value" @input="$emit('input', $event.target.value)" )
+        button(@click="$emit('search')") Search
 
     .options  
         .option(
@@ -34,6 +34,9 @@ export default {
             else this.selectedOption = part
 
             this.$emit('part-selected', this.selectedOption)
+        },
+        emitSearch() {
+            this.$emit('search')
         }
     }
 }
@@ -47,29 +50,41 @@ export default {
     background-color: white
 
     &-input 
+        margin-bottom: 15px
         display: flex
+        
 
         input 
             border: none
-            height: 60px
+            height: 50px
             width: 100%
             box-sizing: border-box 
             padding: 0 20px
-            margin-bottom: 10px
+            border: 1px solid #f1f1f1
+            border-right: none
+            border-radius: 5px 0 0 5px
 
             &:focus, &:active 
                 outline: none
 
         button
+            cursor: pointer
             flex: none
-            width: 60px
-            height: 60px
-            border: none
+            // width: 60px
+            padding: 0 20px
+            height: 50px
+            border: 1px solid #26A69A 
+            background-color: #26A69A 
+            color: white
+            border-radius: 0 5px 5px 0
+
+            &:focus
+                outline: none             
 
     .options 
         width: 100% 
         display: flex
-        padding: 0 20px 
+        padding: 0 10px 
         margin-bottom: 10px
         box-sizing: border-box
 
@@ -84,25 +99,26 @@ export default {
             &-checkbox 
                 width: 10px 
                 height: 10px 
+                border-radius: 2px
                 background-color: #dadada
                 margin-right: 5px
 
             &:hover 
-                color: blue 
+                color: #26A69A 
                 
                 .option-checkbox 
-                    background-color: blue
+                    background-color: lighten(#26A69A, 5%)
 
             &-selected
                 color: #212121
 
                 .option-checkbox 
-                    background-color: orange
+                    background-color: #26A69A 
 
                 &:hover 
                     color: black
 
                     .option-checkbox 
-                        background-color: red
+                        background-color: darken(#26A69A, 5%)
                 
 </style>

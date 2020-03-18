@@ -27,5 +27,6 @@ html, body
     margin: 0
     box-sizing: border-box 
     font-family: Avenir, Helvetica, Arial, sans-serif
+    background-color: #f3f3f3
 
 </style>

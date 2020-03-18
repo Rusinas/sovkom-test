@@ -1,0 +1,12 @@
+<template>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19">
+    <path id="ic_star_24px" d="M12,17.27,18.18,21l-1.64-7.03L22,9.24l-7.19-.61L12,2,9.19,8.63,2,9.24l5.46,4.73L5.82,21Z" transform="translate(-2 -2)"/>
+</svg>
+</template>
+
+<style lang="sass" scoped>
+svg 
+    fill: #26A69A
+    &:hover 
+        fill: darken(#26A69A, 5%)
+</style>

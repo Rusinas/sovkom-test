@@ -18,7 +18,9 @@ export default {
 <style lang="sass" scoped>
 .application
     width: 800px 
-    background-color: #f1f1f1
+    background-color: white
+    border-radius: 8px
+    box-shadow: 0 5px 25px rgba(0,0,0,0.05)
     padding: 20px
     box-sizing: border-box 
 </style>

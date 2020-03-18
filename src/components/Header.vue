@@ -18,12 +18,17 @@ export default {
     align-items: center 
     height: 60px
     margin-bottom: 20px
-    background-color: white 
+    background-color: #26A69A 
     padding: 0 20px 
     box-sizing: border-box
+    border-radius: 5px
 
 .logo, .starred
+    font-weight: bold
+    color: white
     cursor: pointer
+    transition: color .1s linear 
+
     &:hover 
-        color: blue
+        color: #dadada
 </style>

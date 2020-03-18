@@ -3,8 +3,9 @@
     Search(v-model="searchString" @search="search" @part-selected="setPartOfSpeech")
     .results(v-if="!loading && results.length")
         WordCard(v-for="result in results" :key="result.word" :word="result")
-    .no-results(v-else-if="!loading && !results.length") Что
-    .loading(v-else) Загрузка
+    .no-results(v-else-if="!loading && !results.length") Nothing found
+    .no-search(v-else-if="!searched") Type your search request and tap enter
+    .loading(v-else) Loading
 </template>
 
 <script>
@@ -29,17 +30,17 @@ export default {
     data() {
         return {
             loading: true,
-            searchString: 'free',
+            searched: false,
+            searchString: '',
             partOfSpeech: null, 
             results: []
         }
     },
-    mounted() {
-        this.search()
-    },
     methods: {
         async search() {
             if (!this.searchString) return 
+            
+            this.searched = true
 
 
             try {
@@ -68,7 +69,6 @@ export default {
                     const partOfSpeech = item.results && item.results.length ? item.results[0].partOfSpeech : null
 
                     if (item.results) {
-
                         for (let def of item.results) {
 
                             if (!definitions[def.partOfSpeech]) {
@@ -108,9 +108,11 @@ export default {
 
 .results 
 
-.loading, .no-results
+.loading, .no-results, .no-search
+    font-size: 14px
+    color: #BDBDBD
     width: 100% 
-    min-height: 150px 
+    min-height: 100px 
     display: flex 
     align-items: center
     justify-content: center 
